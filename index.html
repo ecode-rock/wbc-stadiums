@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WBC 2026 Stadiums</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #c41e3a;
+            --secondary: #003087;
+            --accent: #ffd700;
+            --dark: #1a1a1a;
+            --light: #f5f5f5;
+            --text: #2d2d2d;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: linear-gradient(180deg, rgba(196, 30, 58, 0.1) 0%, transparent 100%);
+        }
+
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3rem, 10vw, 7rem);
+            color: white;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-shadow: 4px 4px 0px rgba(196, 30, 58, 0.3);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--accent);
+            font-weight: 300;
+            letter-spacing: 4px;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Stadium Grid */
+        .stadiums-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        .stadium-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .stadium-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(196, 30, 58, 0.4);
+        }
+
+        .stadium-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .stadium-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .stadium-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .stadium-info {
+            padding: 25px;
+        }
+
+        .pool-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .stadium-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 6px;
+            letter-spacing: 2px;
+        }
+
+        .stadium-location {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--dark);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-modal:hover {
+            background: var(--primary);
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-hero {
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+        }
+
+        .modal-hero-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+
+        .modal-hero-text h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            letter-spacing: 6px;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .modal-hero-text p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .modal-body {
+            padding: 50px;
+        }
+
+        /* Weather Widget */
+        .weather-ticket-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .weather-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        .weather-section h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .weather-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .weather-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .weather-item-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .weather-item-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .weather-loading {
+            text-align: center;
+            padding: 20px;
+            opacity: 0.9;
+        }
+
+        .ticket-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .ticket-section h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .ticket-button {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .ticket-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
+            background: #ffe54d;
+        }
+
+        .sponsor-highlight {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .sponsor-highlight h4 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .sponsor-highlight p {
+            font-size: 1rem;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .feature-section {
+            margin-bottom: 40px;
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary);
+        }
+
+        .feature-header:hover {
+            background: #e8e8e8;
+            transform: translateX(5px);
+        }
+
+        .feature-header h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            color: var(--dark);
+        }
+
+        .feature-toggle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-header.active .feature-toggle {
+            transform: rotate(180deg);
+        }
+
+        .feature-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            padding: 0 20px;
+        }
+
+        .feature-content.active {
+            max-height: 2000px;
+            padding: 30px 20px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-item {
+            background: white;
+            border: 2px solid var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-item-label {
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .feature-item-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+                letter-spacing: 4px;
+            }
+
+            .modal-body {
+                padding: 30px 20px;
+            }
+
+            .modal-hero-text h2 {
+                font-size: 3rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .weather-ticket-row {
+                grid-template-columns: 1fr;
+            }
+
+            .weather-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>WBC 2026 Stadiums</h1>
+        <p class="subtitle">Explore the World's Baseball Stages</p>
+    </div>
+
+    <div class="stadiums-container" id="stadiumsContainer">
+        <!-- Stadium cards will be generated here -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">×</button>
+            <div class="modal-hero" id="modalHero">
+                <div class="modal-hero-text">
+                    <h2 id="modalStadiumName"></h2>
+                    <p id="modalStadiumLocation"></p>
+                </div>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Feature sections will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const stadiums = [
+            {
+                name: "Hiram Bithorn Stadium",
+                location: "San Juan, Puerto Rico",
+                city: "San Juan",
+                pool: "Pool A",
+                capacity: "18,000",
+                opened: "1962",
+                surface: "Artificial Turf",
+                roof: "Open Air",
+                sponsor: "No Corporate Sponsor",
+                sponsorInfo: "Municipally owned by the City of San Juan. Named after Hiram Bithorn, the first Puerto Rican to play in Major League Baseball.",
+                teams: "Puerto Rico, Canada, Cuba, Panama, Colombia",
+                dates: "March 6-11, 2026",
+                imageUrl: "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=800&q=80",
+                heroImage: "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=1200&q=80",
+                cityPopulation: "566,000",
+                metroPopulation: "2.43 million",
+                lat: 18.4237,
+                lon: -66.0794,
+                ticketUrl: "https://www.mlb.com/world-baseball-classic/tickets",
+                features: {
+                    "Essential Information": {
+                        "Full Address": "Avenida F.D. Roosevelt, San Juan, 00920",
+                        "Country": "Puerto Rico (US Territory)",
+                        "Coordinates": "18.4237° N, 66.0794° W",
+                        "City Population": "566,000",
+                        "Metro Population": "2.43 million",
+                        "Baseball-Specific Capacity": "18,000",
+                        "Year Built": "1962",
+                        "Home Team": "Cangrejeros de Santurce",
+                        "Home Team League": "LBPRC (Liga de Béisbol Profesional de Puerto Rico)",
+                        "Architect": "Osvaldo Toro"
+                    },
+                    "Sponsor Details": {
+                        "Sponsor Name": "None - Municipal Stadium",
+                        "Named After": "Hiram Bithorn (1916-1951)",
+                        "First Puerto Rican in MLB": "Chicago Cubs, 1942",
+                        "Sponsor Connection to Region": "Municipally owned, serving Puerto Rico's baseball community",
+                        "Previous Stadium Names": "Originally Estadio Hiram Bithorn (unchanged)",
+                        "Community Initiatives": "Youth baseball development programs across the island",
+                        "Historic Designation": "National Register of Historic Places (2014)"
+                    },
+                    "Visitor Information & Transit": {
+                        "Parking": "Multiple lots available near stadium",
+                        "Parking Cost": "Varies by event",
+                        "Nearby Parking Options": "Street parking and private lots within walking distance",
+                        "Public Transit": "🚇 Tren Urbano - Hato Rey Station (15 min walk)",
+                        "Bus Routes": "Multiple routes serve the area",
+                        "Gate Entry Count": "6 gates",
+                        "Accessibility": "Wheelchair accessible seating, ramps available",
+                        "Nearby Hotels": "Condado area (5 km), Old San Juan (6 km)",
+                        "Nearby Restaurants": "Santurce district dining, Calle Loíza restaurants",
+                        "Nearby Attractions": "Roberto Clemente Coliseum, Plaza Las Americas",
+                        "Food Options": "Puerto Rican cuisine, traditional ballpark fare"
+                    },
+                    "Stadium Details": {
+                        "Field Dimensions": "L: 325 ft, C: 404 ft, R: 325 ft",
+                        "Playing Surface": "Artificial Turf",
+                        "Roof Type": "Open Air",
+                        "Notable Features": "Zigzag roof design, tropical modern architecture",
+                        "Unique Architecture": "Zigzag concrete roof canopy, tropical modernist style",
+                        "Scoreboard": "LED video board",
+                        "Luxury Seating": "Limited premium seating areas"
+                    },
+                    "WBC 2026 Details": {
+                        "Pool": "Pool A",
+                        "Teams": "Puerto Rico, Canada, Cuba, Panama, Colombia",
+                        "Dates": "March 6-11, 2026",
+                        "Pool Play Games": "~10 games",
+                        "Hosting Quarterfinals": "No",
+                        "Hosting Semifinals": "No",
+                        "Hosting Finals": "No",
+                        "Previous WBC Hosting": "2006, 2009, 2013, 2017",
+                        "Memorable WBC Moments": "Puerto Rico's 2017 undefeated run through pool play to finals",
+                        "WBC Attendance Record": "~18,000 (capacity sellouts)"
+                    },
+                    "Historical & Cultural Context": {
+                        "Stadium Nickname": "La Cueva de los Cangrejeros",
+                        "Major Renovations": "Multiple renovations for WBC hosting events",
+                        "Famous Non-WBC Events": "Caribbean Series, concerts, soccer matches",
+                        "Concerts Hosted": "Various Latin music artists and international acts",
+                        "Local Baseball Culture": "Deep baseball tradition; birthplace of many MLB stars including Roberto Clemente",
+                        "Significance to Region": "Premier sports venue on the island; symbol of Puerto Rican baseball pride",
+                        "National Register Status": "Listed on National Register of Historic Places (2014)"
+                    },
+                    "Stadium Operations": {
+                        "Owned By": "Municipality of San Juan",
+                        "Operated By": "Municipality of San Juan",
+                        "Construction Cost": "~$4.25 million (1962 dollars)",
+                        "Cost (2026 Adjusted)": "~$42 million",
+                        "Annual Attendance": "Varies by LBPRC season",
+                        "Food & Beverage": "Puerto Rican cuisine, traditional ballpark fare",
+                        "Premium Dining": "Limited concourse dining options",
+                        "Wi-Fi Available": "Yes",
+                        "Mobile App": "N/A"
+                    },
+                    "Technical Specifications": {
+                        "Total Square Footage": "~250,000 sq ft",
+                        "Playing Field Sq Footage": "~120,000 sq ft",
+                        "Elevation Above Sea Level": "30 ft",
+                        "Field Orientation": "Northeast",
+                        "Foul Territory": "Medium",
+                        "Wall Height (Left)": "8 ft",
+                        "Wall Height (Center)": "8 ft",
+                        "Wall Height (Right)": "8 ft"
+                    },
+                    "Safety & Sustainability": {
+                        "Hurricane Resistant": "Yes",
+                        "Earthquake Resistant": "Yes",
+                        "Emergency Exits": "~16",
+                        "LEED Certification": "None",
+                        "Sustainability Features": "Basic recycling program",
+                        "Solar Panels": "No",
+                        "Rainwater Collection": "No"
+                    },
+                    "WBC 2026 Schedule": {
+                        "Pool Play Start": "March 6, 2026",
+                        "Pool Play End": "March 11, 2026",
+                        "Quarterfinal Dates": "N/A - not hosting",
+                        "Game Times": "Various - TBD",
+                        "Broadcast Info": "ESPN/FOX in USA; international broadcasters vary"
+                    },
+                    "Links & Media": {
+                        "Official Stadium Website": "N/A",
+                        "WBC Official Page": "mlb.com/world-baseball-classic",
+                        "Wikipedia": "en.wikipedia.org/wiki/Hiram_Bithorn_Stadium",
+                        "Google Maps": "maps.google.com/?q=Hiram+Bithorn+Stadium+San+Juan",
+                        "Seating Chart": "Available at venue box office",
+                        "Photo Gallery": "Available via WBC official site",
+                        "Virtual Tour": "N/A"
+                    }
+                }
+            },
+            {
+                name: "Daikin Park",
+                location: "Houston, Texas",
+                city: "Houston",
+                pool: "Pool B",
+                capacity: "41,168",
+                opened: "2000",
+                surface: "Natural Grass",
+                roof: "Retractable",
+                sponsor: "Daikin Comfort Technologies",
+                sponsorInfo: "Global leader in HVAC systems. Manufactures heating, cooling, and air conditioning for residential, commercial, and industrial use. North American HQ located in Houston area with largest HVAC manufacturing facility in North America.",
+                teams: "United States, Mexico, Italy, Great Britain, Brazil",
+                dates: "March 6-11, 2026",
+                imageUrl: "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=800&q=80",
+                heroImage: "https://images.unsplash.com/photo-1606925797300-0b35e9d1794e?w=1200&q=80",
+                cityPopulation: "2.44 million",
+                metroPopulation: "6.89 million",
+                lat: 29.7572,
+                lon: -95.3556,
+                ticketUrl: "https://www.mlb.com/world-baseball-classic/tickets",
+                features: {
+                    "Essential Information": {
+                        "Full Address": "501 Crawford St, Houston, TX 77002",
+                        "Country": "United States",
+                        "Coordinates": "29.7572° N, 95.3556° W",
+                        "City Population": "2.44 million (4th largest US city)",
+                        "Metro Population": "6.89 million (5th largest in US)",
+                        "Baseball-Specific Capacity": "41,168",
+                        "Year Built": "2000",
+                        "Home Team": "Houston Astros",
+                        "Home Team League": "MLB - American League West",
+                        "Architect": "HOK Sport (now Populous)"
+                    },
+                    "Sponsor Details": {
+                        "Sponsor Name": "Daikin Comfort Technologies North America, Inc.",
+                        "Parent Company": "Daikin Industries, Ltd. (Japan) - Founded 1924",
+                        "Industry": "HVAC - Heating, Ventilation, Air Conditioning",
+                        "What They Do": "Manufactures Daikin, Goodman, and Amana brand heating/cooling systems",
+                        "Sponsorship Started": "January 1, 2025",
+                        "Deal Length": "15 years (through 2039)",
+                        "Deal End Year": "2039",
+                        "Local Connection": "4.2M sq ft manufacturing facility in Waller, TX; North American HQ in Houston area",
+                        "Previous Names": "Enron Field (2000-02), Astros Field (2002), Minute Maid Park (2002-24)",
+                        "Community Initiatives": "Educational programming and youth sports development in underserved communities"
+                    },
+                    "Visitor Information & Transit": {
+                        "Parking": "Multiple garages available",
+                        "Parking Cost": "$20-40 per game",
+                        "Nearby Parking Options": "Street parking and private lots within walking distance",
+                        "Public Transit": "🚊 METRORail Red Line - Convention District Station",
+                        "Light Rail": "Direct access from downtown and Texas Medical Center",
+                        "Bus Routes": "METRO routes 40, 75, 163 serve the area",
+                        "Gate Entry Count": "8 gates",
+                        "Accessibility": "Wheelchair accessible seating, elevators, ramps",
+                        "Nearby Hotels": "Downtown Houston - within walking distance",
+                        "Nearby Restaurants": "Downtown Houston dining district",
+                        "Nearby Attractions": "George R. Brown Convention Center, Discovery Green",
+                        "Food Options": "BBQ, Tex-Mex, traditional ballpark, craft beer"
+                    },
+                    "Stadium Details": {
+                        "Field Dimensions": "L: 315 ft, C: 435 ft, R: 326 ft",
+                        "Playing Surface": "Natural Grass",
+                        "Grass Type": "Platinum TE Paspalum",
+                        "Roof Type": "Retractable",
+                        "Roof Open/Close Time": "20 minutes",
+                        "Notable Features": "Left field train on 800-ft track, Union Station integration",
+                        "Unique Architecture": "Union Station integration, retractable roof, downtown skyline views",
+                        "Luxury Seating": "5,197 club seats, 63 luxury suites",
+                        "Scoreboard Type": "LED video board",
+                        "Scoreboard Dimensions": "54 ft high x 124 ft wide"
+                    },
+                    "WBC 2026 Details": {
+                        "Pool": "Pool B",
+                        "Teams": "United States, Mexico, Italy, Great Britain, Brazil",
+                        "Dates": "March 6-11, 2026",
+                        "Pool Play Games": "~10 games",
+                        "Hosting Quarterfinals": "Yes",
+                        "Hosting Semifinals": "No",
+                        "Hosting Finals": "No",
+                        "Previous WBC Hosting": "2006 (Round 1), 2009 (Round 2), 2013 (Round 1), 2017 (Round 2)",
+                        "Memorable WBC Moments": "USA's dominant 2017 pool play performance at home",
+                        "WBC Attendance Record": "~36,000"
+                    },
+                    "Historical & Cultural Context": {
+                        "Stadium Nickname": "The Juice Box (former, from Minute Maid era)",
+                        "Current Nickname": "TBD - Daikin naming too new",
+                        "Major Renovations": "2016 outfield wall installation, 2012 HD video board upgrade",
+                        "Famous Non-WBC Events": "World Series (2017, 2019, 2021, 2022), All-Star Game (2004), Super Bowl Opening Night",
+                        "Concerts Hosted": "Paul McCartney, Taylor Swift, Bad Bunny, Lady Gaga, Red Hot Chili Peppers",
+                        "Local Baseball Culture": "Deep baseball roots; home to historic Negro League teams; strong Latino baseball heritage",
+                        "Significance to Region": "Replaced Astrodome as premier venue; downtown revitalization anchor; cultural gathering place",
+                        "National Register Status": "Not listed"
+                    },
+                    "Stadium Operations": {
+                        "Owned By": "Houston Astros (Jim Crane)",
+                        "Operated By": "Houston Astros",
+                        "Construction Cost": "$250 million (2000 dollars)",
+                        "Cost (2026 Adjusted)": "~$450 million",
+                        "Annual Attendance": "~2,850,000 (MLB season)",
+                        "Food & Beverage": "Traditional ballpark fare, local BBQ, Tex-Mex, craft beer",
+                        "Premium Dining": "Club level restaurants, suite catering, Budweiser Brewhouse",
+                        "Wi-Fi Available": "Yes",
+                        "Mobile App": "MLB Ballpark App"
+                    },
+                    "Technical Specifications": {
+                        "Total Square Footage": "1,263,240 sq ft",
+                        "Playing Field Sq Footage": "130,680 sq ft",
+                        "Elevation Above Sea Level": "50 ft",
+                        "Field Orientation": "North-Northeast",
+                        "Foul Territory": "Medium",
+                        "Wall Height (Left)": "19 ft",
+                        "Wall Height (Center)": "8 ft",
+                        "Wall Height (Right)": "7 ft"
+                    },
+                    "Safety & Sustainability": {
+                        "Hurricane Resistant": "Yes",
+                        "Earthquake Resistant": "N/A",
+                        "Emergency Exits": "24",
+                        "LEED Certification": "LEED Silver",
+                        "Sustainability Features": "Energy-efficient LED lighting, water conservation systems, recycling program",
+                        "Solar Panels": "No",
+                        "Rainwater Collection": "No"
+                    },
+                    "WBC 2026 Schedule": {
+                        "Pool Play Start": "March 6, 2026",
+                        "Pool Play End": "March 11, 2026",
+                        "Quarterfinal Dates": "March 13-14, 2026",
+                        "Game Times": "Various - TBD",
+                        "Broadcast Info": "FOX Media in USA; international broadcasters vary"
+                    },
+                    "Links & Media": {
+                        "Official Stadium Website": "mlb.com/astros/ballpark",
+                        "Team Website": "mlb.com/astros",
+                        "WBC Official Page": "mlb.com/world-baseball-classic",
+                        "Wikipedia": "en.wikipedia.org/wiki/Daikin_Park",
+                        "Google Maps": "maps.google.com/?q=Daikin+Park+Houston",
+                        "Seating Chart": "mlb.com/astros/ballpark/seating-map",
+                        "Photo Gallery": "mlb.com/astros/ballpark/photos",
+                        "Virtual Tour": "mlb.com/astros/ballpark/virtual-tour",
+                        "Instagram": "instagram.com/astros",
+                        "X (Twitter)": "x.com/astros"
+                    }
+                }
+            },
+            {
+                name: "Tokyo Dome",
+                location: "Tokyo, Japan",
+                city: "Tokyo",
+                pool: "Pool C",
+                capacity: "46,000",
+                opened: "1988",
+                surface: "Artificial Turf",
+                roof: "Fixed Dome",
+                sponsor: "No Corporate Sponsor",
+                sponsorInfo: "Owned and operated by Tokyo Dome Corporation. Known as 'Big Egg' due to its distinctive shape. One of the most iconic baseball venues in Asia.",
+                teams: "Japan, Korea, Australia, Chinese Taipei, Czechia",
+                dates: "March 5-10, 2026",
+                imageUrl: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800&q=80",
+                heroImage: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=1200&q=80",
+                cityPopulation: "9.7 million",
+                metroPopulation: "37.0 million",
+                lat: 35.7056,
+                lon: 139.7519,
+                ticketUrl: "https://www.mlb.com/world-baseball-classic/tickets",
+                features: {
+                    "Essential Information": {
+                        "Full Address": "1-3-61 Koraku, Bunkyo City, Tokyo 112-0004",
+                        "Country": "Japan",
+                        "Coordinates": "35.7056° N, 139.7519° E",
+                        "City Population": "9.7 million",
+                        "Metro Population": "37.0 million (largest metro in world)",
+                        "Baseball-Specific Capacity": "46,000",
+                        "Year Built": "1988",
+                        "Home Team": "Yomiuri Giants",
+                        "Home Team League": "NPB - Central League",
+                        "Architect": "Nikken Sekkei"
+                    },
+                    "Sponsor Details": {
+                        "Sponsor Name": "None - Tokyo Dome Corporation owned",
+                        "Parent Company": "Tokyo Dome Corporation (Mitsui Fudosan Group)",
+                        "Industry": "Entertainment & Leisure",
+                        "What They Do": "Operates Tokyo Dome City entertainment complex",
+                        "Nickname": "Big Egg (Big Egg Stadium)",
+                        "Complex": "Tokyo Dome City entertainment complex",
+                        "Previous Names": "None (always Tokyo Dome)",
+                        "Community Initiatives": "Youth baseball clinics and community sports programs",
+                        "Notable": "First stadium in Japan with air-supported dome roof"
+                    },
+                    "Visitor Information & Transit": {
+                        "Parking": "Limited parking at Tokyo Dome City complex",
+                        "Parking Cost": "Varies; public transit strongly recommended",
+                        "Nearby Parking Options": "Tokyo Dome City parking garage, nearby coin parking",
+                        "Public Transit": "🚇 JR Suidobashi Station (3 min walk)",
+                        "Metro Access": "Tokyo Metro - Korakuen Station (5 min walk)",
+                        "Subway Lines": "Marunouchi Line, Namboku Line, Toei Mita Line",
+                        "Gate Entry Count": "10 gates",
+                        "Accessibility": "Wheelchair accessible seating, elevators, barrier-free access",
+                        "Nearby Hotels": "Tokyo Dome Hotel (43 stories) - adjacent to stadium",
+                        "Nearby Restaurants": "Tokyo Dome City dining, Korakuen area restaurants",
+                        "Nearby Attractions": "Tokyo Dome City Attractions, LaQua Spa Resort",
+                        "Food Options": "Japanese cuisine, bento boxes, international food court",
+                        "Shopping": "Tokyo Dome City shopping complex"
+                    },
+                    "Stadium Details": {
+                        "Field Dimensions": "L: 328 ft, C: 400 ft, R: 328 ft",
+                        "Playing Surface": "Artificial Turf",
+                        "Roof Type": "Fixed Dome (air-supported)",
+                        "Dome Height": "183.7 ft at highest point",
+                        "Notable Features": "Air-supported fabric roof, entertainment complex",
+                        "Unique Architecture": "Teflon-coated fiberglass fabric roof supported by air pressure",
+                        "Scoreboard Type": "LED video board",
+                        "Scoreboard Dimensions": "Large multi-panel LED display system",
+                        "Luxury Seating": "Premium box seats, Royal Suite"
+                    },
+                    "WBC 2026 Details": {
+                        "Pool": "Pool C",
+                        "Teams": "Japan, Korea, Australia, Chinese Taipei, Czechia",
+                        "Dates": "March 5-10, 2026",
+                        "Pool Play Games": "~10 games",
+                        "Hosting Quarterfinals": "Yes",
+                        "Hosting Semifinals": "No",
+                        "Hosting Finals": "No",
+                        "Previous WBC Hosting": "2006, 2009, 2013, 2017, 2023",
+                        "Memorable WBC Moments": "Japan's 2023 championship run; Ohtani striking out Trout in 2023 final; Ichiro's 2009 walk-off hit",
+                        "WBC Attendance Record": "~46,000 (capacity sellouts)"
+                    },
+                    "Historical & Cultural Context": {
+                        "Stadium Nickname": "Big Egg",
+                        "Major Renovations": "2000 LED scoreboard upgrade, ongoing modernization",
+                        "Famous Non-WBC Events": "Japan Series (annually), NBA Japan Games, NFL American Bowl",
+                        "Concerts Hosted": "The Rolling Stones, Taylor Swift, BTS, Arashi, various J-Pop artists",
+                        "Local Baseball Culture": "Baseball is Japan's most popular sport; Yomiuri Giants are Japan's most famous team",
+                        "Significance to Region": "Iconic Tokyo landmark; centerpiece of Tokyo Dome City complex; cultural institution",
+                        "National Register Status": "Not listed"
+                    },
+                    "Stadium Operations": {
+                        "Owned By": "Tokyo Dome Corporation (Mitsui Fudosan Group)",
+                        "Operated By": "Tokyo Dome Corporation",
+                        "Construction Cost": "~¥35 billion (~$350 million in 1988)",
+                        "Cost (2026 Adjusted)": "~$800 million",
+                        "Annual Attendance": "~3,000,000 (NPB season)",
+                        "Food & Beverage": "Japanese cuisine, bento boxes, international options, beer vendors",
+                        "Premium Dining": "Suite-level dining, premium club restaurants",
+                        "Wi-Fi Available": "Yes",
+                        "Mobile App": "Tokyo Dome official app"
+                    },
+                    "Technical Specifications": {
+                        "Total Square Footage": "~484,000 sq ft",
+                        "Playing Field Sq Footage": "~130,000 sq ft",
+                        "Elevation Above Sea Level": "33 ft",
+                        "Field Orientation": "North",
+                        "Foul Territory": "Small (NPB standard)",
+                        "Wall Height (Left)": "10 ft",
+                        "Wall Height (Center)": "10 ft",
+                        "Wall Height (Right)": "10 ft"
+                    },
+                    "Safety & Sustainability": {
+                        "Hurricane Resistant": "N/A",
+                        "Earthquake Resistant": "Yes - advanced seismic isolation system",
+                        "Emergency Exits": "~30",
+                        "LEED Certification": "N/A (Japanese standards apply)",
+                        "Sustainability Features": "Energy-efficient LED lighting, waste reduction programs, recycling initiatives",
+                        "Solar Panels": "No",
+                        "Rainwater Collection": "No"
+                    },
+                    "WBC 2026 Schedule": {
+                        "Pool Play Start": "March 5, 2026",
+                        "Pool Play End": "March 10, 2026",
+                        "Quarterfinal Dates": "March 12-13, 2026",
+                        "Game Times": "Various - TBD",
+                        "Broadcast Info": "Netflix in Japan; FOX/ESPN in USA; international broadcasters vary"
+                    },
+                    "Links & Media": {
+                        "Official Stadium Website": "tokyo-dome.co.jp",
+                        "Team Website": "giants.jp",
+                        "WBC Official Page": "mlb.com/world-baseball-classic",
+                        "Wikipedia": "en.wikipedia.org/wiki/Tokyo_Dome",
+                        "Google Maps": "maps.google.com/?q=Tokyo+Dome+Japan",
+                        "Seating Chart": "Available at tokyo-dome.co.jp",
+                        "Photo Gallery": "Available via WBC official site",
+                        "Virtual Tour": "Available via Tokyo Dome City website"
+                    }
+                }
+            },
+            {
+                name: "loanDepot park",
+                location: "Miami, Florida",
+                city: "Miami",
+                pool: "Pool D",
+                capacity: "36,742",
+                opened: "2012",
+                surface: "Natural Grass",
+                roof: "Retractable",
+                sponsor: "loanDepot",
+                sponsorInfo: "Second-largest non-bank retail mortgage lender in the United States. Provides direct-to-consumer mortgage and lending products. Founded 2010, headquartered in California, funded over $300 billion in home loans.",
+                teams: "Dominican Republic, Venezuela, Netherlands, Israel, Nicaragua",
+                dates: "March 6-11, 2026",
+                imageUrl: "https://images.unsplash.com/photo-1508766206392-8bd5cf550d1c?w=800&q=80",
+                heroImage: "https://images.unsplash.com/photo-1508766206392-8bd5cf550d1c?w=1200&q=80",
+                cityPopulation: "509,000",
+                metroPopulation: "6.37 million",
+                lat: 25.7781,
+                lon: -80.2197,
+                ticketUrl: "https://www.mlb.com/world-baseball-classic/tickets",
+                features: {
+                    "Essential Information": {
+                        "Full Address": "501 Marlins Way, Miami, FL 33125",
+                        "Country": "United States",
+                        "Coordinates": "25.7781° N, 80.2197° W",
+                        "City Population": "509,000",
+                        "Metro Population": "6.37 million",
+                        "Baseball-Specific Capacity": "36,742",
+                        "Year Built": "2012",
+                        "Home Team": "Miami Marlins",
+                        "Home Team League": "MLB - National League East",
+                        "Architect": "Populous (formerly HOK Sport)"
+                    },
+                    "Sponsor Details": {
+                        "Sponsor Name": "loanDepot, Inc.",
+                        "Parent Company": "loanDepot, Inc. (publicly traded)",
+                        "Industry": "Mortgage Lending",
+                        "What They Do": "Non-bank retail mortgage lender - home financing",
+                        "Sponsorship Started": "2021",
+                        "Deal Length": "Multi-year agreement",
+                        "Headquarters": "Foothill Ranch, California",
+                        "Local Connection": "Serving South Florida's diverse homebuying market",
+                        "Previous Names": "Marlins Park (2012-2021)",
+                        "Community Initiatives": "Homeownership education programs in South Florida communities",
+                        "Company Motto": "Home Means Everything",
+                        "Funding History": "$300+ billion since 2010"
+                    },
+                    "Visitor Information & Transit": {
+                        "Parking": "Pre-purchase recommended, limited availability",
+                        "Parking Cost": "$20-40 per event",
+                        "Nearby Parking Options": "Street parking in Little Havana; private lots available",
+                        "Public Transit": "🚋 Free trolleys from Downtown Miami",
+                        "Metrorail": "Nearest station: Culmer (15 min walk)",
+                        "Trolley Service": "Free game-day shuttles to/from Civic Center",
+                        "Gate Entry Count": "6 gates",
+                        "Accessibility": "Wheelchair accessible seating, elevators, ADA compliant",
+                        "Neighborhood": "Little Havana district",
+                        "Nearby Hotels": "Downtown Miami, Brickell area",
+                        "Nearby Restaurants": "Little Havana dining, Calle Ocho restaurants",
+                        "Nearby Attractions": "Little Havana, Wynwood Walls, Brickell",
+                        "Food Options": "Cuban cuisine, Latin American, traditional ballpark"
+                    },
+                    "Stadium Details": {
+                        "Field Dimensions": "L: 344 ft, C: 407 ft, R: 335 ft",
+                        "Playing Surface": "Natural Grass",
+                        "Grass Type": "Celebration Bermudagrass",
+                        "Roof Type": "Retractable",
+                        "Roof Open/Close Time": "~14 minutes",
+                        "Roof Size": "5.27-acre retractable roof",
+                        "Seating": "Smallest MLB capacity (36,742)",
+                        "Notable Features": "Retractable glass panels, Miami skyline views",
+                        "Unique Architecture": "Retractable glass walls, South Florida aesthetic, aquarium behind home plate",
+                        "Luxury Seating": "3,300 club seats, 56 luxury suites",
+                        "Scoreboard Type": "LED video board",
+                        "Scoreboard Dimensions": "Large HD display above left-center field"
+                    },
+                    "WBC 2026 Details": {
+                        "Pool": "Pool D",
+                        "Teams": "Dominican Republic, Venezuela, Netherlands, Israel, Nicaragua",
+                        "Dates": "March 6-11, 2026",
+                        "Pool Play Games": "~10 games",
+                        "Hosting Quarterfinals": "Yes",
+                        "Hosting Semifinals": "No",
+                        "Hosting Finals": "No",
+                        "Previous WBC Hosting": "2013 (Round 2), 2017 (Round 1), 2023 (Championship Round)",
+                        "Memorable WBC Moments": "Japan's 2023 championship victory; Ohtani striking out Trout to win the 2023 final",
+                        "WBC Attendance Record": "~36,123",
+                        "2023 WBC Final": "Hosted the championship game"
+                    },
+                    "Historical & Cultural Context": {
+                        "Stadium Nickname": "The Fish Tank (informal)",
+                        "Major Renovations": "Home run sculpture removed (2019), naming rights change (2021)",
+                        "Famous Non-WBC Events": "2017 All-Star Game, Caribbean Series (2024)",
+                        "Concerts Hosted": "Various Latin and international music artists",
+                        "Local Baseball Culture": "Massive Latin American baseball community; deep Dominican, Cuban, Venezuelan heritage",
+                        "Significance to Region": "Replaced Orange Bowl site; hub of Miami's multicultural sports scene",
+                        "National Register Status": "Not listed"
+                    },
+                    "Stadium Operations": {
+                        "Owned By": "Miami-Dade County",
+                        "Operated By": "Miami Marlins (Bruce Sherman)",
+                        "Construction Cost": "$634 million (2012 dollars)",
+                        "Cost (2026 Adjusted)": "~$850 million",
+                        "Annual Attendance": "~1,200,000 (MLB season)",
+                        "Food & Beverage": "Cuban cuisine, Latin American fare, traditional ballpark, craft cocktails",
+                        "Premium Dining": "Clevelander rooftop deck, Diamond Club, suite catering",
+                        "Wi-Fi Available": "Yes",
+                        "Mobile App": "MLB Ballpark App"
+                    },
+                    "Technical Specifications": {
+                        "Total Square Footage": "~1,200,000 sq ft",
+                        "Playing Field Sq Footage": "~130,000 sq ft",
+                        "Elevation Above Sea Level": "7 ft",
+                        "Field Orientation": "East-Northeast",
+                        "Foul Territory": "Small",
+                        "Wall Height (Left)": "7 ft",
+                        "Wall Height (Center)": "8 ft",
+                        "Wall Height (Right)": "7 ft"
+                    },
+                    "Safety & Sustainability": {
+                        "Hurricane Resistant": "Yes - Category 5 rated",
+                        "Earthquake Resistant": "N/A",
+                        "Emergency Exits": "~20",
+                        "LEED Certification": "LEED Gold (greenest MLB park at opening)",
+                        "Sustainability Features": "Energy-efficient LED lighting, water conservation, recycling, natural ventilation system",
+                        "Solar Panels": "No",
+                        "Rainwater Collection": "Yes"
+                    },
+                    "WBC 2026 Schedule": {
+                        "Pool Play Start": "March 6, 2026",
+                        "Pool Play End": "March 11, 2026",
+                        "Quarterfinal Dates": "March 13-14, 2026",
+                        "Game Times": "Various - TBD",
+                        "Broadcast Info": "FOX Media in USA; ESPN Deportes for Latin America; international broadcasters vary"
+                    },
+                    "Links & Media": {
+                        "Official Stadium Website": "mlb.com/marlins/ballpark",
+                        "Team Website": "mlb.com/marlins",
+                        "WBC Official Page": "mlb.com/world-baseball-classic",
+                        "Wikipedia": "en.wikipedia.org/wiki/LoanDepot_park",
+                        "Google Maps": "maps.google.com/?q=loanDepot+park+Miami",
+                        "Seating Chart": "mlb.com/marlins/ballpark/seating-map",
+                        "Photo Gallery": "mlb.com/marlins/ballpark/photos",
+                        "Virtual Tour": "Available via Marlins official site",
+                        "Instagram": "instagram.com/marlins",
+                        "X (Twitter)": "x.com/marlins"
+                    }
+                }
+            }
+        ];
+
+        // Convert URL-like text into clickable links
+        function linkify(value) {
+            const urlPattern = /\b((?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\/[^\s,;]*)?)/g;
+            const excludePatterns = /^(N\/A|None|Yes|No|TBD|Various)/i;
+            if (excludePatterns.test(value.trim())) return value;
+            return value.replace(urlPattern, function(match) {
+                const href = match.startsWith('http') ? match : 'https://' + match;
+                return `<a href="${href}" target="_blank" rel="noopener noreferrer" style="color: var(--primary); text-decoration: underline; word-break: break-all;">${match}</a>`;
+            });
+        }
+
+        // Generate stadium cards
+        function generateStadiumCards() {
+            const container = document.getElementById('stadiumsContainer');
+            stadiums.forEach((stadium, index) => {
+                const card = document.createElement('div');
+                card.className = 'stadium-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.onclick = () => openModal(stadium);
+                
+                card.innerHTML = `
+                    <div class="stadium-image" style="background-image: url('${stadium.imageUrl}')"></div>
+                    <div class="stadium-info">
+                        <div class="pool-badge">${stadium.pool}</div>
+                        <h2 class="stadium-name">${stadium.name}</h2>
+                        <p class="stadium-location">${stadium.location}</p>
+                        <div class="stats-grid">
+                            <div class="stat">
+                                <div class="stat-label">Capacity</div>
+                                <div class="stat-value">${stadium.capacity}</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">Opened</div>
+                                <div class="stat-value">${stadium.opened}</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">Surface</div>
+                                <div class="stat-value">${stadium.surface}</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-label">Roof</div>
+                                <div class="stat-value">${stadium.roof}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Open modal with stadium details
+        function openModal(stadium) {
+            const modal = document.getElementById('modal');
+            const modalHero = document.getElementById('modalHero');
+            const modalBody = document.getElementById('modalBody');
+            
+            // Set hero section with background image
+            modalHero.style.backgroundImage = `url('${stadium.heroImage}')`;
+            document.getElementById('modalStadiumName').textContent = stadium.name;
+            document.getElementById('modalStadiumLocation').textContent = stadium.location;
+            
+            // Generate weather and ticket section
+            let topSection = `
+                <div class="weather-ticket-row">
+                    <div class="weather-section" id="weatherSection">
+                        <h4>🌤️ Current Weather</h4>
+                        <div class="weather-loading">Loading weather data...</div>
+                    </div>
+                    <div class="ticket-section">
+                        <h4>Get Your Tickets</h4>
+                        <p style="margin-bottom: 15px; font-size: 0.9rem;">WBC 2026<br>${stadium.dates}</p>
+                        <a href="${stadium.ticketUrl}" target="_blank" class="ticket-button">
+                            🎟️ Buy Tickets
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            // Generate sponsor highlight
+            let modalContent = topSection + `
+                <div class="sponsor-highlight">
+                    <h4>Stadium Sponsor: ${stadium.sponsor}</h4>
+                    <p>${stadium.sponsorInfo}</p>
+                </div>
+            `;
+            
+            // Generate feature sections
+            for (const [sectionName, sectionData] of Object.entries(stadium.features)) {
+                modalContent += `
+                    <div class="feature-section">
+                        <div class="feature-header" onclick="toggleFeature(this)">
+                            <h3>${sectionName}</h3>
+                            <div class="feature-toggle">▼</div>
+                        </div>
+                        <div class="feature-content">
+                            <div class="feature-grid">
+                                ${Object.entries(sectionData).map(([key, value]) => `
+                                    <div class="feature-item">
+                                        <div class="feature-item-label">${key}</div>
+                                        <div class="feature-item-value">${linkify(value)}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            modalBody.innerHTML = modalContent;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Fetch weather data using city name for reliability
+            fetchWeather(stadium.lat, stadium.lon, stadium.city);
+        }
+
+        // Fetch current weather using wttr.in (no API key needed, better CORS)
+        async function fetchWeather(lat, lon, city) {
+            try {
+                // Using wttr.in weather service with city name for better reliability
+                const location = city ? encodeURIComponent(city) : `${lat},${lon}`;
+                const response = await fetch(
+                    `https://wttr.in/${location}?format=j1`,
+                    {
+                        method: 'GET'
+                    }
+                );
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.current_condition || !data.current_condition[0]) {
+                    throw new Error('Invalid weather data received');
+                }
+                
+                const current = data.current_condition[0];
+                
+                // Map weather description to emoji
+                const desc = current.weatherDesc[0].value.toLowerCase();
+                let weatherEmoji = '🌤️';
+                if (desc.includes('clear') || desc.includes('sunny')) weatherEmoji = '☀️';
+                else if (desc.includes('cloud')) weatherEmoji = '☁️';
+                else if (desc.includes('partly')) weatherEmoji = '⛅';
+                else if (desc.includes('rain')) weatherEmoji = '🌧️';
+                else if (desc.includes('storm') || desc.includes('thunder')) weatherEmoji = '⛈️';
+                else if (desc.includes('snow')) weatherEmoji = '❄️';
+                else if (desc.includes('fog') || desc.includes('mist')) weatherEmoji = '🌫️';
+                
+                const weatherDesc = `${weatherEmoji} ${current.weatherDesc[0].value}`;
+                const tempF = Math.round(current.temp_F);
+                const humidity = current.humidity;
+                const windMph = Math.round(current.windspeedMiles);
+                
+                const weatherHTML = `
+                    <div class="weather-info">
+                        <div class="weather-item">
+                            <div class="weather-item-label">Conditions</div>
+                            <div class="weather-item-value">${weatherDesc}</div>
+                        </div>
+                        <div class="weather-item">
+                            <div class="weather-item-label">Temperature</div>
+                            <div class="weather-item-value">${tempF}°F</div>
+                        </div>
+                        <div class="weather-item">
+                            <div class="weather-item-label">Humidity</div>
+                            <div class="weather-item-value">${humidity}%</div>
+                        </div>
+                        <div class="weather-item">
+                            <div class="weather-item-label">Wind Speed</div>
+                            <div class="weather-item-value">${windMph} mph</div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('weatherSection').innerHTML = `
+                    <h4>🌤️ Current Weather</h4>
+                    ${weatherHTML}
+                `;
+            } catch (error) {
+                console.error('Weather fetch error:', error);
+                // Display static weather info as fallback
+                displayFallbackWeather(lat, lon);
+            }
+        }
+
+        // Fallback weather display with general climate info
+        function displayFallbackWeather(lat, lon) {
+            // Basic climate info based on location
+            let climateInfo = {
+                condition: '🌤️ Typical Weather',
+                temp: '75',
+                humidity: '65',
+                wind: '8'
+            };
+            
+            // Adjust based on latitude (rough estimates)
+            if (lat > 30) {
+                climateInfo.temp = '72';
+                climateInfo.condition = '🌤️ Temperate';
+            } else if (lat < 20) {
+                climateInfo.temp = '82';
+                climateInfo.humidity = '75';
+                climateInfo.condition = '☀️ Tropical';
+            }
+            
+            const weatherHTML = `
+                <div class="weather-info">
+                    <div class="weather-item">
+                        <div class="weather-item-label">Conditions</div>
+                        <div class="weather-item-value">${climateInfo.condition}</div>
+                    </div>
+                    <div class="weather-item">
+                        <div class="weather-item-label">Avg Temperature</div>
+                        <div class="weather-item-value">~${climateInfo.temp}°F</div>
+                    </div>
+                    <div class="weather-item">
+                        <div class="weather-item-label">Avg Humidity</div>
+                        <div class="weather-item-value">~${climateInfo.humidity}%</div>
+                    </div>
+                    <div class="weather-item">
+                        <div class="weather-item-label">Wind</div>
+                        <div class="weather-item-value">~${climateInfo.wind} mph</div>
+                    </div>
+                </div>
+                <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 15px; text-align: center;">
+                    Live weather temporarily unavailable - showing typical conditions
+                </p>
+            `;
+            
+            document.getElementById('weatherSection').innerHTML = `
+                <h4>🌤️ Weather Information</h4>
+                ${weatherHTML}
+            `;
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Toggle feature section
+        function toggleFeature(header) {
+            const content = header.nextElementSibling;
+            const isActive = header.classList.contains('active');
+            
+            // Close all sections
+            document.querySelectorAll('.feature-header').forEach(h => h.classList.remove('active'));
+            document.querySelectorAll('.feature-content').forEach(c => c.classList.remove('active'));
+            
+            // Open clicked section if it wasn't active
+            if (!isActive) {
+                header.classList.add('active');
+                content.classList.add('active');
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Initialize
+        generateStadiumCards();
+    </script>
+</body>
+</html>

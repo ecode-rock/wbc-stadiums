@@ -1,0 +1,128 @@
+Category,Field_Name,Data_Type,Example_Data,Notes,Priority
+Essential_Information,stadium_name,text,Daikin Park,,High
+Essential_Information,city,text,Houston,,High
+Essential_Information,country,text,United States,,High
+Essential_Information,capacity,integer,41168,,High
+Essential_Information,capacity_baseball_specific,integer,41168,For multi-purpose venues,Medium
+Essential_Information,gps_latitude,decimal,29.7572,-90 to 90,High
+Essential_Information,gps_longitude,decimal,-95.3556,-180 to 180,High
+Essential_Information,full_address,text,"501 Crawford St Houston TX 77002",,High
+Essential_Information,year_built,integer,2000,,High
+Essential_Information,year_opened,integer,2000,,High
+Essential_Information,architect_designer,text,HOK Sport (now Populous),,Medium
+Essential_Information,home_team_regular,text,Houston Astros,,High
+Essential_Information,home_team_league,text,MLB - American League West,,Medium
+
+Sponsor_Information,sponsor_name,text,Daikin Comfort Technologies North America Inc.,,High
+Sponsor_Information,sponsor_parent_company,text,"Daikin Industries Ltd. (Japan)",,Medium
+Sponsor_Information,sponsor_industry,text,HVAC - Heating Ventilation Air Conditioning,,High
+Sponsor_Information,sponsor_what_they_do,text,Manufactures residential commercial and industrial heating and cooling systems,,High
+Sponsor_Information,sponsor_year_began,integer,2025,When naming rights started,Medium
+Sponsor_Information,sponsor_deal_length_years,integer,15,,Medium
+Sponsor_Information,sponsor_deal_end_year,integer,2039,,Low
+Sponsor_Information,sponsor_connection_to_region,text,North American HQ and largest HVAC plant in North America located in Houston area,,Medium
+Sponsor_Information,previous_stadium_names,text,Enron Field (2000-2002); Astros Field (2002); Minute Maid Park (2002-2024),,Medium
+Sponsor_Information,sponsor_community_initiatives,text,Educational programming and youth sports development in underserved communities,,Low
+Sponsor_Information,sponsor_motto_slogan,text,Home Means Everything,For loanDepot,Low
+
+Practical_Visitor_Information,parking_availability,text,Multiple parking garages available,,High
+Practical_Visitor_Information,parking_cost,text,$20-40 per game,,Medium
+Practical_Visitor_Information,parking_nearby_options,text,Street parking and private lots within walking distance,,Medium
+Practical_Visitor_Information,public_transportation_nearest,text,METRORail Red Line - Convention District Station,,High
+Practical_Visitor_Information,public_transportation_routes,text,METRO Bus Routes 40 75 163,,Medium
+Practical_Visitor_Information,gate_entry_count,integer,8,Number of gates,Low
+Practical_Visitor_Information,accessibility_features,text,Wheelchair accessible seating elevators ramps,,Medium
+Practical_Visitor_Information,nearby_hotels,url_list,https://www.hotels.com/search,Links to hotel search,Medium
+Practical_Visitor_Information,nearby_restaurants,url_list,https://www.yelp.com/search,Links to restaurant listings,Medium
+Practical_Visitor_Information,nearby_attractions,url_list,https://www.tripadvisor.com/,Tourist attractions within 2 miles,Low
+
+Stadium_Details,field_dimensions_left,integer,315,Feet,Medium
+Stadium_Details,field_dimensions_center,integer,435,Feet,Medium
+Stadium_Details,field_dimensions_right,integer,326,Feet,Medium
+Stadium_Details,playing_surface_type,text,Natural Grass,,Medium
+Stadium_Details,grass_type,text,Platinum TE Paspalum,,Low
+Stadium_Details,roof_type,text,Retractable,,High
+Stadium_Details,roof_open_close_time,integer,20,Minutes to open/close,Low
+Stadium_Details,seating_layout_premium,integer,5197,Club seats,Low
+Stadium_Details,seating_layout_luxury_suites,integer,63,,Low
+Stadium_Details,notable_features,text,Left field train on 800-foot track; Hill in center field; manual scoreboard,,Medium
+Stadium_Details,unique_architecture,text,Union Station integration; retractable roof; downtown skyline views,,Medium
+Stadium_Details,scoreboard_type,text,LED video board,,Low
+Stadium_Details,scoreboard_dimensions,text,54 feet high x 124 feet wide,,Low
+
+WBC_Specific_Content,wbc_2026_pool,text,Pool B,,High
+WBC_Specific_Content,wbc_2026_teams,text_list,"United States, Mexico, Italy, Great Britain, Brazil",,High
+WBC_Specific_Content,wbc_2026_dates,text,March 6-11 2026,,High
+WBC_Specific_Content,wbc_2026_games_count,integer,10,Pool play games,Medium
+WBC_Specific_Content,wbc_2026_quarterfinals,boolean,TRUE,If hosting quarterfinals,High
+WBC_Specific_Content,wbc_2026_semifinals,boolean,FALSE,,High
+WBC_Specific_Content,wbc_2026_finals,boolean,FALSE,,High
+WBC_Specific_Content,wbc_games_hosted_history,text,"2006 (Round 1), 2009 (Round 2), 2013 (Round 1), 2017 (Round 2)",,Medium
+WBC_Specific_Content,memorable_wbc_moments,text,Japan's 2023 championship game victory with Ohtani striking out Trout,,Medium
+WBC_Specific_Content,past_wbc_attendance_record,integer,36123,Highest attendance at this venue for WBC,Low
+
+Rich_Media,photo_gallery_url,url,https://www.mlb.com/astros/ballpark/photos,,Medium
+Rich_Media,virtual_tour_url,url,https://www.mlb.com/astros/ballpark/virtual-tour,360 degree views,Low
+Rich_Media,stadium_map_seating_chart_url,url,https://www.mlb.com/astros/ballpark/seating-map,,High
+Rich_Media,video_highlights_url,url,https://www.youtube.com/playlist,,Low
+Rich_Media,drone_footage_url,url,https://www.youtube.com/watch,,Low
+
+Interactive_Features,google_maps_embed,url,https://maps.google.com/?q=Daikin+Park+Houston,,High
+Interactive_Features,weather_widget_api,text,OpenWeatherMap API or WeatherAPI,,High
+Interactive_Features,current_weather_conditions,dynamic,Pull from API,,High
+Interactive_Features,7day_forecast,dynamic,Pull from API,,Medium
+Interactive_Features,ticket_purchase_link,url,https://www.mlb.com/world-baseball-classic/tickets,,High
+Interactive_Features,compare_stadiums_feature,boolean,TRUE,Side-by-side comparison tool,Medium
+Interactive_Features,fan_reviews_ratings,boolean,TRUE,User-generated content,Low
+Interactive_Features,share_social_media,boolean,TRUE,Share buttons,Low
+
+Historical_Cultural_Context,stadium_nickname,text,The Juice Box (former); Daikin Dome,,Low
+Historical_Cultural_Context,stadium_nickname_current,text,TBD - too new,,Low
+Historical_Cultural_Context,major_renovations,text_list,2016 outfield wall installation; 2012 HD video board,,Medium
+Historical_Cultural_Context,famous_non_wbc_events,text_list,World Series (2017 2019 2021 2022); All-Star Game (2004); Super Bowl Opening Night,,Medium
+Historical_Cultural_Context,concerts_hosted,text_list,"Paul McCartney, Taylor Swift, Bad Bunny, Lady Gaga, Red Hot Chili Peppers",,Low
+Historical_Cultural_Context,local_baseball_culture,text,Houston has deep baseball roots; home to Negro League teams; Latino baseball heritage,,Low
+Historical_Cultural_Context,significance_to_region,text,Replaced Astrodome; downtown revitalization anchor; cultural gathering place,,Medium
+Historical_Cultural_Context,national_register_status,text,Not listed,Historic designation if applicable,Low
+
+Stadium_Operations,owned_by,text,Houston Astros (Jim Crane),Ownership entity,Medium
+Stadium_Operations,operated_by,text,Houston Astros,,Medium
+Stadium_Operations,construction_cost,text,$250 million (2000 dollars),,Low
+Stadium_Operations,construction_cost_inflation_adjusted,text,$450 million (2026 dollars),,Low
+Stadium_Operations,annual_attendance,integer,2850000,Approximate MLB season,Low
+Stadium_Operations,food_beverage_options,text_list,Traditional ballpark fare; local BBQ; Tex-Mex; craft beer,,Medium
+Stadium_Operations,premium_dining,text,"Club level restaurants; suite catering; Budweiser Brewhouse",,Low
+Stadium_Operations,wifi_available,boolean,TRUE,,Low
+Stadium_Operations,mobile_app,text,MLB Ballpark App,,Low
+
+Technical_Specifications,total_square_footage,integer,1263240,,Low
+Technical_Specifications,playing_field_square_footage,integer,130680,,Low
+Technical_Specifications,elevation_above_sea_level,integer,50,Feet,Low
+Technical_Specifications,orientation,text,North-Northeast,,Low
+Technical_Specifications,foul_territory,text,Medium,,Low
+Technical_Specifications,wall_height_left,integer,19,Feet,Low
+Technical_Specifications,wall_height_center,integer,8,Feet,Low
+Technical_Specifications,wall_height_right,integer,7,Feet,Low
+
+Safety_Sustainability,hurricane_resistant,boolean,TRUE,For Miami/Puerto Rico stadiums,Medium
+Safety_Sustainability,earthquake_resistant,boolean,TRUE,For Tokyo stadium,Medium
+Safety_Sustainability,emergency_exits,integer,24,,Low
+Safety_Sustainability,leed_certification,text,LEED Silver,Environmental certification,Low
+Safety_Sustainability,sustainability_features,text_list,Energy-efficient LED lighting; water conservation systems; recycling program,,Low
+Safety_Sustainability,solar_panels,boolean,FALSE,,Low
+Safety_Sustainability,rainwater_collection,boolean,FALSE,,Low
+
+WBC_2026_Schedule,pool_play_start_date,date,2026-03-06,,High
+WBC_2026_Schedule,pool_play_end_date,date,2026-03-11,,High
+WBC_2026_Schedule,quarterfinal_dates,date,2026-03-13 to 2026-03-14,If applicable,Medium
+WBC_2026_Schedule,game_times,text,Various - TBD,,Medium
+WBC_2026_Schedule,broadcast_info,text,FOX Media in USA; Netflix in Japan,,Medium
+
+Additional_Links,official_stadium_website,url,https://www.mlb.com/astros/ballpark,,High
+Additional_Links,team_website,url,https://www.mlb.com/astros,,Medium
+Additional_Links,wbc_official_page,url,https://www.mlb.com/world-baseball-classic,,High
+Additional_Links,wikipedia_page,url,https://en.wikipedia.org/wiki/Daikin_Park,,Low
+Additional_Links,google_reviews,url,https://www.google.com/maps/reviews,,Low
+Additional_Links,tripadvisor_reviews,url,https://www.tripadvisor.com/,,Low
+Additional_Links,instagram_account,url,https://www.instagram.com/astros/,,Low
+Additional_Links,twitter_account,url,https://twitter.com/astros,,Low
